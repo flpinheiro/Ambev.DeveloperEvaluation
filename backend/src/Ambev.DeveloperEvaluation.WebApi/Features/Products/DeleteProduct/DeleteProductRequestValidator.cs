@@ -6,5 +6,6 @@ public class DeleteProductRequestValidator : AbstractValidator<DeleteProductRequ
 {
     public DeleteProductRequestValidator()
     {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Should have a nom empty id");
     }
 }

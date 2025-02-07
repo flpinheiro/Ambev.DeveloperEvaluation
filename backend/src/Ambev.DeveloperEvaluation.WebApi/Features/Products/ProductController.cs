@@ -61,6 +61,9 @@ public class ProductController : BaseController
         var command = _mapper.Map<GetProductCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
+        if(response == null)
+            return NotFound(new ApiResponse { Message = "Product not found", Success = false });
+
         return Ok(new ApiResponseWithData<GetProductResponse>
         {
             Success = true,
@@ -83,13 +86,15 @@ public class ProductController : BaseController
         if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<DeleteProductCommand>(request);
-        var response = await _mediator.Send(command, cancellationToken);
+        var result =  await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponseWithData<DeleteProductResponse>
+        if(!result)
+            return NotFound(new ApiResponse { Message = "Product not found", Success = false });
+
+        return Ok(new ApiResponse
         {
             Success = true,
-            Message = "Product deleted successfully",
-            Data = _mapper.Map<DeleteProductResponse>(response)
+            Message = "Product deleted successfully"
         });
     }
 }

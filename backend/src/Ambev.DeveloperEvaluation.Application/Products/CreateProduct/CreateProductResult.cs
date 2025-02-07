@@ -1,9 +1,8 @@
-﻿using MediatR;
+﻿namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 
-namespace Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
-
-public class CreateProductCommand : IRequest<CreateProductResult>
+public class CreateProductResult
 {
+    public Guid Id { get; set; }
     /// <summary>
     /// Gets the product name.
     /// </summary>

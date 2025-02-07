@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
+
+public class GetProductRequestValidator :AbstractValidator<GetProductRequest>
 {
-    public class GetProductRequestValidator :AbstractValidator<GetProductRequest>
+    public GetProductRequestValidator()
     {
+        RuleFor(x => x.Id).NotEmpty().WithMessage("Should have a nom empty id");
     }
 }

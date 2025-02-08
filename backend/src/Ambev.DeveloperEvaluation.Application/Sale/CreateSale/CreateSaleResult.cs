@@ -1,8 +1,8 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Dtos;
 
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
 
-public class CreateSaleResponse
+public class CreateSaleResult
 {
     public Guid Id { get; set; }
     /// <summary>

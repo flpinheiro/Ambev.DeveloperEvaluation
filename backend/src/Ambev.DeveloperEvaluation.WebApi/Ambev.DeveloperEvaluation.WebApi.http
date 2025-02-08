@@ -1,6 +1,29 @@
-@Ambev.DeveloperEvaluation.WebApi_HostAddress = http://localhost:5119
+@Ambev.DeveloperEvaluation.WebApi_HostAddress = https://localhost:7181
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
+###
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
+Content-Type: application/json
+
+{
+  "products": [
+    {
+      "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "quantity": 1
+    },
+    {
+      "productId": "843da404-10ce-4454-86ce-b22a688d9d42",
+      "quantity": 6
+    },
+    {
+      "productId": "7fd103d8-55c9-4d30-8e9e-0f7951ec4526",
+      "quantity": 10
+    },
+    {
+      "productId": "d007fbc3-cd33-4f97-8f8c-4f3162e0fc8f",
+      "quantity": 20
+    }
+  ]
+}
 
 ###

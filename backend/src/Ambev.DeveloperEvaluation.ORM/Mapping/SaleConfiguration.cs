@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,8 +16,8 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
 
         builder.Property(s => s.Number).UseSerialColumn().IsRequired();
         builder.Property(s => s.TotalValue).IsRequired();
-        builder.Property(s => s.Status).IsRequired();
         builder.Property(s => s.Date).IsRequired();
+        builder.Property(p => p.Status).IsRequired().HasDefaultValue(SaleStatus.Active);
 
         builder.HasIndex(s => s.Number).IsUnique();
     }

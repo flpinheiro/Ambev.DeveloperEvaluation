@@ -48,9 +48,70 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasColumnType("integer")
                         .HasDefaultValue(100);
 
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
+
                     b.HasKey("Id");
 
                     b.ToTable("Products", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f5b1b3b4-3b3b-4b3b-8b3b-3b3b3b3b3b3b"),
+                            Description = "Product 1 description",
+                            Name = "Product 1",
+                            Price = 10.00m,
+                            Quantity = 100,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("e3c9c4bd-b12c-45b0-a106-7390a8249a7a"),
+                            Description = "Product 2 description",
+                            Name = "Product 2",
+                            Price = 20.00m,
+                            Quantity = 100,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("c28ab6d3-2cd3-45b3-98a7-2222c9cd7edb"),
+                            Description = "Product 3 description",
+                            Name = "Product 3",
+                            Price = 30.00m,
+                            Quantity = 100,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("cec713ad-d16d-4444-a1d8-94dd4aceabb9"),
+                            Description = "Product 4 description",
+                            Name = "Product 4",
+                            Price = 30.00m,
+                            Quantity = 100,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("8295a692-df5c-4d85-8ac9-e50dd5829f0c"),
+                            Description = "Product 5 description",
+                            Name = "Product 5",
+                            Price = 30.00m,
+                            Quantity = 100,
+                            Status = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("6f5a5196-af78-4446-940e-6c410238399d"),
+                            Description = "Product 6 description",
+                            Name = "Product 6",
+                            Price = 30.00m,
+                            Quantity = 100,
+                            Status = 1
+                        });
                 });
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.Entities.Sale", b =>
@@ -69,13 +130,18 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Number"));
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1);
 
                     b.Property<decimal>("TotalValue")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Number")
+                        .IsUnique();
 
                     b.ToTable("Sales", (string)null);
                 });
@@ -139,17 +205,11 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid?>("ProductId1")
-                        .HasColumnType("uuid");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("SaleId1")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("TotalAmout")
                         .HasColumnType("numeric");
@@ -158,34 +218,22 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("ProductId1");
-
-                    b.HasIndex("SaleId1");
-
                     b.ToTable("ProductSales", (string)null);
                 });
 
             modelBuilder.Entity("Ambev.DeveloperEvaluation.Domain.ValueObjects.ProductSale", b =>
                 {
                     b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductSales")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Product", null)
-                        .WithMany("ProductSales")
-                        .HasForeignKey("ProductId1");
-
                     b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Sale", "Sale")
-                        .WithMany()
+                        .WithMany("ProductSales")
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Ambev.DeveloperEvaluation.Domain.Entities.Sale", null)
-                        .WithMany("ProductSales")
-                        .HasForeignKey("SaleId1");
 
                     b.Navigation("Product");
 

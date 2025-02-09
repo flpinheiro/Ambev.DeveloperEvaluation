@@ -4,27 +4,16 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     /// <inheritdoc />
-    public partial class AddproductSale : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "CreatedAt",
-                table: "Users",
-                type: "timestamp with time zone",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "UpdatedAt",
-                table: "Users",
-                type: "timestamp with time zone",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
@@ -33,7 +22,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false, defaultValue: 100)
+                    Quantity = table.Column<int>(type: "integer", nullable: false, defaultValue: 100),
+                    Status = table.Column<int>(type: "integer", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
@@ -49,11 +39,30 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TotalValue = table.Column<decimal>(type: "numeric", nullable: false),
-                    Status = table.Column<bool>(type: "boolean", nullable: false)
+                    Status = table.Column<int>(type: "integer", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "gen_random_uuid()"),
+                    Username = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Password = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,9 +74,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     TotalAmout = table.Column<decimal>(type: "numeric", nullable: false),
                     Discount = table.Column<decimal>(type: "numeric", nullable: false),
-                    Status = table.Column<bool>(type: "boolean", nullable: false),
-                    ProductId1 = table.Column<Guid>(type: "uuid", nullable: true),
-                    SaleId1 = table.Column<Guid>(type: "uuid", nullable: true)
+                    Status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,21 +86,24 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductSales_Products_ProductId1",
-                        column: x => x.ProductId1,
-                        principalTable: "Products",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_ProductSales_Sales_SaleId",
                         column: x => x.SaleId,
                         principalTable: "Sales",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductSales_Sales_SaleId1",
-                        column: x => x.SaleId1,
-                        principalTable: "Sales",
-                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Description", "Name", "Price", "Quantity", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("6f5a5196-af78-4446-940e-6c410238399d"), "Product 6 description", "Product 6", 30.00m, 100, 1 },
+                    { new Guid("8295a692-df5c-4d85-8ac9-e50dd5829f0c"), "Product 5 description", "Product 5", 30.00m, 100, 1 },
+                    { new Guid("c28ab6d3-2cd3-45b3-98a7-2222c9cd7edb"), "Product 3 description", "Product 3", 30.00m, 100, 1 },
+                    { new Guid("cec713ad-d16d-4444-a1d8-94dd4aceabb9"), "Product 4 description", "Product 4", 30.00m, 100, 1 },
+                    { new Guid("e3c9c4bd-b12c-45b0-a106-7390a8249a7a"), "Product 2 description", "Product 2", 20.00m, 100, 1 },
+                    { new Guid("f5b1b3b4-3b3b-4b3b-8b3b-3b3b3b3b3b3b"), "Product 1 description", "Product 1", 10.00m, 100, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -102,14 +112,10 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductSales_ProductId1",
-                table: "ProductSales",
-                column: "ProductId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductSales_SaleId1",
-                table: "ProductSales",
-                column: "SaleId1");
+                name: "IX_Sales_Number",
+                table: "Sales",
+                column: "Number",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -119,18 +125,13 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                 name: "ProductSales");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Sales");
-
-            migrationBuilder.DropColumn(
-                name: "CreatedAt",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "UpdatedAt",
-                table: "Users");
         }
     }
 }

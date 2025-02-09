@@ -1,7 +1,9 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
 using Ambev.DeveloperEvaluation.Domain.ValueObjects;
+using System.Security.Principal;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -26,6 +28,11 @@ public class Product : BaseEntity
     /// Gets the product quantity.
     /// </summary>
     public int Quantity { get; set; }
+
+    /// <summary>
+    /// Gets the product status.
+    /// </summary>
+    public ProductStatus Status { get; set; }
 
     /// <summary>
     /// Performs validation of the <see cref="Product" /> entity using the <see cref="ProductValidator" /> rules.

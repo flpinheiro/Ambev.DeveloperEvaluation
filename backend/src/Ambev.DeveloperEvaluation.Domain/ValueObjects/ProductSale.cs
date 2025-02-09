@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.ValueObjects;
@@ -41,10 +42,8 @@ public class ProductSale
 
     /// <summary>
     /// gets the sale.status of the product
-    /// true = product is valid on the sale
-    /// false = product is canceled on the sale
     /// </summary>
-    public bool Status { get; set; } = true;
+    public SaleStatus Status { get; set; } = SaleStatus.Active;
 
     /// <summary>
     /// Performs validation of the <see cref="ProductSale"/> Vaslue Object using the <see cref="ProductSaleValidator"/> rules.

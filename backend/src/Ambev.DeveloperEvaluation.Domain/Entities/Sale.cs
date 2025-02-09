@@ -1,5 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
 using Ambev.DeveloperEvaluation.Domain.ValueObjects;
 
@@ -27,10 +28,8 @@ public class Sale : BaseEntity
 
     /// <summary>
     /// gets the sale.status
-    /// true = sale is active
-    /// false = sale is canceled
     /// </summary>
-    public bool Status { get; set; } = true;
+    public SaleStatus Status { get; set; } = SaleStatus.Active;
 
     /// <summary>
     /// Performs validation of the <see cref="Sale" /> entity using the<see cref="SaleValidator"/> rules.

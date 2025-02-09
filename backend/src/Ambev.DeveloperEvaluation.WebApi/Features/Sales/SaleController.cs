@@ -84,11 +84,12 @@ public class SaleController : BaseController
         var command = _mapper.Map<DeleteSaleCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
-        return Ok(new ApiResponseWithData<DeleteSaleResponse>
+        if (!response) return BadRequest("Unable to Cancel Sale");
+
+        return Ok(new ApiResponse
         {
             Success = true,
-            Message = "Sale deleted successfully",
-            Data = _mapper.Map<DeleteSaleResponse>(response)
+            Message = "Sale Calceled successfully",
         });
     }
 }

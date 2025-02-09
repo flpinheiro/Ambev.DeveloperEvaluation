@@ -23,16 +23,23 @@ public class SaleRepository : ISaleRepository
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var sale = await GetByIdAsync(id, cancellationToken);
-        if (sale is null) return false;
+        if (sale is null || sale.Status > Domain.Enums.SaleStatus.Active) return false;
 
-        _context.Sales.Remove(sale);
-        await _context.Sales.SingleAsync(cancellationToken);
+        sale.Status = Domain.Enums.SaleStatus.Canceled;
+        sale.ProductSales.ToList().ForEach(ps => 
+            ps.Status = Domain.Enums.SaleStatus.Canceled);
+
+        _context.Sales.Update(sale);
+        await _context.SaveChangesAsync(cancellationToken);
         return true;
     }
 
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _context.Sales.FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+        return await _context.Sales
+            .Include(ps=> ps.ProductSales)
+            .ThenInclude(p => p.Product)
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }
 
     public Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)

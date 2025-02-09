@@ -13,6 +13,7 @@ public class CreateSaleProfile : Profile
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : string.Empty))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product != null ? src.Product.Description : string.Empty))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(dest => dest.Product != null ? dest.Product.Price : 0))
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
             .ForMember(dest => dest.Discount, opt=> opt.MapFrom(src => src.Discount))
             .ForMember(dest => dest.TotalAmout, opt => opt.MapFrom(src => src.TotalAmout));

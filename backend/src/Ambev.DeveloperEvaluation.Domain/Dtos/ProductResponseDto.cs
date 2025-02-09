@@ -14,6 +14,8 @@ public class ProductResponseDto
     /// </summary>
     public int Quantity { get; set; }
 
+    public decimal Price { get; set; }
+
     /// <summary>
     /// Gets the total amount of the sale by Product.
     /// </summary>

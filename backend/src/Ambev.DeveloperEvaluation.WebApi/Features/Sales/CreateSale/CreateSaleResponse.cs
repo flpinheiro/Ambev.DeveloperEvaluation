@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Dtos;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 
@@ -28,7 +29,7 @@ public class CreateSaleResponse
     /// true = sale is active
     /// false = sale is canceled
     /// </summary>
-    public bool Status { get; set; } = true;
+    public SaleStatus Status { get; set; }
 
 
     /// <summary>

@@ -27,3 +27,7 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc6753b8-30f7-45a7-8dc7-c49011ace848
+
+###

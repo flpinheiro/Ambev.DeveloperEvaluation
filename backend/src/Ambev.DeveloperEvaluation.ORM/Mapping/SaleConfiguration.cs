@@ -17,5 +17,7 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(s => s.TotalValue).IsRequired();
         builder.Property(s => s.Status).IsRequired();
         builder.Property(s => s.Date).IsRequired();
+
+        builder.HasIndex(s => s.Number).IsUnique();
     }
 }

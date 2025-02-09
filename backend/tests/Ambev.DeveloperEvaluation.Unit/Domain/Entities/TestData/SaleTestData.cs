@@ -12,7 +12,17 @@ public static class SaleTestData
         .RuleFor(s => s.Date, f => f.Date.Past())
         .RuleFor(s => s.ProductSales,f => ProductSaleTestData.GenerateValidProductSales(f.Random.Number(100)));
 
-    public static Sale GenerateValidSale() => SaleFaker.Generate();
+    public static Sale GenerateValidSale()
+    {
+        var sale = SaleFaker.Generate();
+        sale.CalculateTotalValue();
+        return sale;
+    }
 
-    public static IEnumerable<Sale> GenerateValidSales(int count) => SaleFaker.Generate(count);
+    public static IEnumerable<Sale> GenerateValidSales(int count)
+    {
+        var sales = SaleFaker.Generate(count).ToList();
+        sales.ForEach(s => s.CalculateTotalValue());
+        return sales; ;
+    }
 }

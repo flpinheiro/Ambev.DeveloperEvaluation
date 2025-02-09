@@ -1,6 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
 using Ambev.DeveloperEvaluation.Application.Sale.DeleteSale;
-using Ambev.DeveloperEvaluation.Application.Sale.GetSale;
+using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;

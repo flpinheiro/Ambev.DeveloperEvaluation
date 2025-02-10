@@ -4,7 +4,7 @@ using AutoMapper;
 using MediatR;
 using SaleEntity = Ambev.DeveloperEvaluation.Domain.Entities.Sale;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, CreateSaleResult>
 {
@@ -58,7 +58,7 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
 
             return result;
         }
-        catch (Exception e)
+        catch (Exception)
         {
 
             throw;

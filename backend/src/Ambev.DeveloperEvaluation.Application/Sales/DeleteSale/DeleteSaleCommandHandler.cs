@@ -1,7 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.DeleteSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 
 public class DeleteSaleCommandHandler : IRequestHandler<DeleteSaleCommand, bool>
 {

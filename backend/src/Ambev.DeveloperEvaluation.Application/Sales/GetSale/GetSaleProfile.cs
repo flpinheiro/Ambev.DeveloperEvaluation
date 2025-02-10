@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.GetSale;
-using AutoMapper;
+﻿using AutoMapper;
 using SaleEntity = Ambev.DeveloperEvaluation.Domain.Entities.Sale;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.GetSale;

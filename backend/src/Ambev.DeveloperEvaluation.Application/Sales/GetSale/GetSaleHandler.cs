@@ -1,5 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.GetSale;
-using Ambev.DeveloperEvaluation.Domain.Repositories;
+﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
 

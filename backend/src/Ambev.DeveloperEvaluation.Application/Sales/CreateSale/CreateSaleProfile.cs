@@ -3,7 +3,7 @@ using Ambev.DeveloperEvaluation.Domain.ValueObjects;
 using AutoMapper;
 using SaleEntity = Ambev.DeveloperEvaluation.Domain.Entities.Sale;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 public class CreateSaleProfile : Profile
 {
@@ -15,7 +15,7 @@ public class CreateSaleProfile : Profile
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Product != null ? src.Product.Description : string.Empty))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(dest => dest.Product != null ? dest.Product.Price : 0))
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
-            .ForMember(dest => dest.Discount, opt=> opt.MapFrom(src => src.Discount))
+            .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => src.Discount))
             .ForMember(dest => dest.TotalAmout, opt => opt.MapFrom(src => src.TotalAmout));
 
         CreateMap<SaleEntity, CreateSaleResult>()

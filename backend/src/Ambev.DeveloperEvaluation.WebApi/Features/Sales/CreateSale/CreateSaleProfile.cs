@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using AutoMapper;
 using FluentValidation;
 

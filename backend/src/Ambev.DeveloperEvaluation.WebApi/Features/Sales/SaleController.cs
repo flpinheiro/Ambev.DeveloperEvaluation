@@ -1,9 +1,12 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
-using Ambev.DeveloperEvaluation.Application.Sale.DeleteSale;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
+using Ambev.DeveloperEvaluation.Application.Sales.GetPaginatedSales;
 using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
+using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 using AutoMapper;
 using MediatR;
@@ -23,6 +26,28 @@ public class SaleController : BaseController
         _mediator = mediator;
         _mapper = mapper;
     }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ApiResponseWithData<PaginatedList<GetPaginatedSaleResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetSale([FromQuery] GetSalePaginated request, CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<GetPaginatedSalesCommand>(request);
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        var response = _mapper.Map<PaginatedList<GetPaginatedSaleResponse>>(result);
+
+        return Ok(
+            new ApiResponseWithData<PaginatedList<GetPaginatedSaleResponse>>() 
+            {
+                Success = true,
+                Message = "Sale retrieved successfully",
+                Data = response
+            });
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<GetSaleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -43,6 +68,7 @@ public class SaleController : BaseController
         return Ok(new ApiResponseWithData<GetSaleResponse>
         {
             Success = true,
+            Message = "Sale retrieved successfully",
             Data = _mapper.Map<GetSaleResponse>(response)
         });
     }

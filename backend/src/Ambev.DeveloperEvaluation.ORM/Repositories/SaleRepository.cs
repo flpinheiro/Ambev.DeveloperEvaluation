@@ -1,4 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Dtos;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +28,7 @@ public class SaleRepository : ISaleRepository
         if (sale is null || sale.Status > Domain.Enums.SaleStatus.Active) return false;
 
         sale.Status = Domain.Enums.SaleStatus.Canceled;
-        sale.ProductSales.ToList().ForEach(ps => 
+        sale.ProductSales.ToList().ForEach(ps =>
             ps.Status = Domain.Enums.SaleStatus.Canceled);
 
         _context.Sales.Update(sale);
@@ -34,10 +36,15 @@ public class SaleRepository : ISaleRepository
         return true;
     }
 
+    public async Task<PaginatedList<Sale>> GetAsync(PaginatedSaleRequestDto request, CancellationToken cancellationToken = default)
+    {
+        return await _context.Sales.Where(a => true).ToPaginatedListAsync(request.PageNumber, request.PageSize);
+    }
+
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Sales
-            .Include(ps=> ps.ProductSales)
+            .Include(ps => ps.ProductSales)
             .ThenInclude(p => p.Product)
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.DeleteSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 
 public class DeleteSaleCommand : IRequest<bool>
 {

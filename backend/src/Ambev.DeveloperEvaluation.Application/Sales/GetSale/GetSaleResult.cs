@@ -1,7 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Dtos;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.GetSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 
 public class GetSaleResult
 {

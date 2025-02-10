@@ -1,8 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Dtos;
-using Ambev.DeveloperEvaluation.Domain.Entities;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Sale.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 public class CreateSaleCommand : IRequest<CreateSaleResult>
 {

@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +13,9 @@ public class DefaultContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Sale> Sales { get; set; }
+    public DbSet<ProductSale> ProductSales { get; set; }
 
-    public DefaultContext(DbContextOptions<DefaultContext> options, IConfiguration configuration = null) : base(options)
+    public DefaultContext(DbContextOptions<DefaultContext> options, IConfiguration? configuration = null) : base(options)
     {
         _configuration = configuration;
     }

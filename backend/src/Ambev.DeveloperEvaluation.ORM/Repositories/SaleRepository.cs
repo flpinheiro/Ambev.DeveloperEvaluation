@@ -3,6 +3,7 @@ using Ambev.DeveloperEvaluation.Domain.Dtos;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Services;
+using Ambev.DeveloperEvaluation.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
@@ -20,8 +21,10 @@ public class SaleRepository : ISaleRepository
     public async Task<Sale?> CreateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
         if (sale == null) return null;
-        if(_userService.UserId != Guid.Empty) sale.UserId = _userService.UserId;
+        if (_userService.UserId != Guid.Empty) sale.UserId = _userService.UserId;
+
         _context.Sales.Add(sale);
+
         await _context.SaveChangesAsync(cancellationToken);
         return sale;
     }

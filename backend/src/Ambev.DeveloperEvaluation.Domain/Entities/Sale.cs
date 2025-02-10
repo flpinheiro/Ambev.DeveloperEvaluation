@@ -33,7 +33,7 @@ public class Sale : BaseEntity
 
     public Guid UserId { get; set; }
 
-    public User User { get; set; } = new();
+    public User? User { get; set; }
 
     /// <summary>
     /// Performs validation of the <see cref="Sale" /> entity using the<see cref="SaleValidator"/> rules.
@@ -62,7 +62,7 @@ public class Sale : BaseEntity
     /// <summary>
     /// Gets the products in the sale.
     /// </summary>
-    public IEnumerable<ProductSale> ProductSales { get; set; } = [];
+    public ICollection<ProductSale> ProductSales { get; set; } = [];
 
     /// <summary>
     /// Gets the total value of the sale.

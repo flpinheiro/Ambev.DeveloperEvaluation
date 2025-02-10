@@ -86,8 +86,7 @@ public class SaleController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateSale(CreateSaleRequest request, CancellationToken cancellationToken)
     {
-        var validatidator = new CreateSaleRequestValidator();
-        var validationResult = await validatidator.ValidateAsync(request, cancellationToken);
+        var validationResult = request.Validate();
 
         if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);

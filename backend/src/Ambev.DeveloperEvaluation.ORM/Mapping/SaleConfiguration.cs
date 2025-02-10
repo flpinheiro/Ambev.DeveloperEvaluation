@@ -20,8 +20,9 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(p => p.Status).IsRequired().HasDefaultValue(SaleStatus.Active);
 
         builder.HasOne(s => s.User)
-            .WithMany(u => u.Sales)
+            .WithMany(u=> u.Sales)
             .HasForeignKey(s => s.UserId)
+            .HasPrincipalKey(u => u.Id)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasIndex(s => s.Number).IsUnique();

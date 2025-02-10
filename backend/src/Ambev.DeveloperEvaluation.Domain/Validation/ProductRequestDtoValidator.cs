@@ -13,8 +13,10 @@ public class ProductRequestDtoValidator : AbstractValidator<ProductRequestDto>
 
         RuleFor(x => x.Quantity)
             .GreaterThan(0)
-            .WithMessage("Quantity must be greater than zero.")
+            .WithMessage(p => $"Quantity of {p.ProductId} must be greater than zero.")
+            .WithErrorCode("Minimum Quantity necessary")
             .LessThanOrEqualTo(20)
-            .WithMessage("quantity must not be greater thean 20");
+            .WithMessage(p => $"quantity of {p.ProductId} must not be greater thean 20")
+            .WithErrorCode("Maximum Quantity exceded");
     }
 }

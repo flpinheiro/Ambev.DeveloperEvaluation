@@ -40,28 +40,20 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
 
         var sale = new SaleEntity
         {
+            Id= Guid.NewGuid(),
             ProductSales = productSales
         };
         sale.CalculateTotalValue();
         foreach (var productSale in productSales)
         {
+            productSale.SaleId = sale.Id;
             productSale.Sale = sale;
         }
 
-
         await _saleRepository.CreateAsync(sale, cancellationToken);
 
+        var result = _mapper.Map<CreateSaleResult>(sale);
 
-        try
-        {
-            var result = _mapper.Map<CreateSaleResult>(sale);
-
-            return result;
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        return result;
     }
 }

@@ -64,5 +64,5 @@ public class Product : BaseEntity
     /// <summary>
     /// Gets the products in the sale.
     /// </summary>
-    public IEnumerable<ProductSale> ProductSales { get; set; } = [];
+    public ICollection<ProductSale> ProductSales { get; set; } = [];
 }

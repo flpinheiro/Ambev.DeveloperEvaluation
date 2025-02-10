@@ -1,6 +1,7 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Dtos;
 using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.Services;
 using Ambev.DeveloperEvaluation.Domain.ValueObjects;
@@ -32,14 +33,12 @@ public class SaleRepository : ISaleRepository
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var sale = await GetByIdAsync(id, cancellationToken);
-        if (sale is null || sale.Status > Domain.Enums.SaleStatus.Active) return false;
+        if (sale is null || sale.Status > SaleStatus.Active || sale.Status == SaleStatus.Canceled) return false;
 
-        sale.Status = Domain.Enums.SaleStatus.Canceled;
-        sale.ProductSales.ToList().ForEach(ps =>
-            ps.Status = Domain.Enums.SaleStatus.Canceled);
+        sale.Status = SaleStatus.Canceled;
+        sale.ProductSales.ToList().ForEach(ps => ps.Status = SaleStatus.Canceled);
 
-        _context.Sales.Update(sale);
-        await _context.SaveChangesAsync(cancellationToken);
+        await UpdateAsync(sale, cancellationToken);
         return true;
     }
 
@@ -58,8 +57,12 @@ public class SaleRepository : ISaleRepository
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }
 
-    public Task<Sale?> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
+    public async Task<Sale?> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _context.Sales.Update(sale);
+        _context.ProductSales.UpdateRange(sale.ProductSales);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return sale;
     }
 }

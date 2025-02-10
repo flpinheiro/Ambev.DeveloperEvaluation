@@ -132,10 +132,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyN
   ]
 }
 
+### Get sale by id
+
+
+GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+
+### Cancel sale by id 
+
+
+DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+
 ###
-# "id": "6f5a5196-af78-4446-940e-6c410238399d",
-# "id": "8295a692-df5c-4d85-8ac9-e50dd5829f0c",
-# "id": "c28ab6d3-2cd3-45b3-98a7-2222c9cd7edb",
-# "id": "cec713ad-d16d-4444-a1d8-94dd4aceabb9",
-# "id": "e3c9c4bd-b12c-45b0-a106-7390a8249a7a",
-# "id": "f5b1b3b4-3b3b-4b3b-8b3b-3b3b3b3b3b3b",
+
+PATCH {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+
+###

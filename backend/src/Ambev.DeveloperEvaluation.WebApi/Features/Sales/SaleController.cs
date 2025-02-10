@@ -2,12 +2,14 @@
 using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Application.Sales.GetPaginatedSales;
 using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
+using Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.PatchSale;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +50,7 @@ public class SaleController : BaseController
         var response = _mapper.Map<PaginatedList<GetPaginatedSaleResponse>>(result);
 
         return Ok(
-            new ApiResponseWithData<PaginatedList<GetPaginatedSaleResponse>>() 
+            new ApiResponseWithData<PaginatedList<GetPaginatedSaleResponse>>()
             {
                 Success = true,
                 Message = "Sale retrieved successfully",
@@ -80,7 +82,7 @@ public class SaleController : BaseController
             Data = _mapper.Map<GetSaleResponse>(response)
         });
     }
-    
+
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -124,5 +126,22 @@ public class SaleController : BaseController
             Success = true,
             Message = "Sale Calceled successfully",
         });
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> PatchSale(Guid id, CancellationToken cancellationToken)
+    {
+        var request = new PatchSaleRequest { Id = id };
+        var validatorResult = request.Validate();
+        if (!validatorResult.IsValid)
+            return BadRequest(validatorResult.Errors);
+
+        var command = _mapper.Map<PatchSaleCommand>(request);
+
+        var result = await _mediator.Send(command, cancellationToken);
+
+        if (!result) return BadRequest(new ApiResponse { Message = "Unable to update sale", Success = false });
+
+        return Ok(new ApiResponse { Success = true, Message = "Sale updated successfully" });
     }
 }

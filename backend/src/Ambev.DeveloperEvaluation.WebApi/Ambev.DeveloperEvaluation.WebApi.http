@@ -78,3 +78,12 @@ GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
 
 ###
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
+Content-Type: application/json
+
+{
+  //CreateSaleRequest
+}
+
+###

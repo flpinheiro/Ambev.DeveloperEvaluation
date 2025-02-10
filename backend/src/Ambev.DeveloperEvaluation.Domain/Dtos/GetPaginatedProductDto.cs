@@ -2,6 +2,6 @@
 
 namespace Ambev.DeveloperEvaluation.Domain.Dtos;
 
-public class PaginatedSaleRequestDto : PaginatedRequest
+public class GetPaginatedProductDto: PaginatedDto
 {
 }

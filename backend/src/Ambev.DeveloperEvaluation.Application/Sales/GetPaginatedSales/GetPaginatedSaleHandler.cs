@@ -1,4 +1,5 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Dtos;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
@@ -18,7 +19,9 @@ public class GetPaginatedSaleHandler : IRequestHandler<GetPaginatedSalesCommand,
 
     public async Task<PaginatedList<GetPaginatedSaleResult>> Handle(GetPaginatedSalesCommand request, CancellationToken cancellationToken)
     {
-        var sales = await _saleRepository.GetAsync(request, cancellationToken);
+        var dto = _mapper.Map<GetPaginatedSaleDto>(request);
+
+        var sales = await _saleRepository.GetAsync(dto, cancellationToken);
 
         var result = _mapper.Map<PaginatedList<GetPaginatedSaleResult>>(sales);
 

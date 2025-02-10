@@ -1,33 +1,80 @@
-@Ambev.DeveloperEvaluation.WebApi_HostAddress = https://localhost:7181
+﻿@Ambev.DeveloperEvaluation.WebApi_HostAddress = https://localhost:7181
 
-###
+#### Create customer user 4df2521b-b92d-4cf2-9aa3-d3d9c837c855
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/users
 Content-Type: application/json
 
 {
-  "products": [
-    {
-      "productId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "quantity": 1
-    },
-    {
-      "productId": "843da404-10ce-4454-86ce-b22a688d9d42",
-      "quantity": 6
-    },
-    {
-      "productId": "7fd103d8-55c9-4d30-8e9e-0f7951ec4526",
-      "quantity": 10
-    },
-    {
-      "productId": "d007fbc3-cd33-4f97-8f8c-4f3162e0fc8f",
-      "quantity": 20
-    }
-  ]
+  "username": "customer",
+  "password": "Password@12345",
+  "phone": "11999999999",
+  "email": "customer@test.com",
+  "status": 1,
+  "role": 1
 }
 
-###
+### Create Manger user 8380dc8d-6419-4b1c-810a-e9c288b0f99f
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc6753b8-30f7-45a7-8dc7-c49011ace848
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "username": "manager",
+  "password": "Password@12345",
+  "phone": "12999999999",
+  "email": "manager@test.com",
+  "status": 1,
+  "role": 2
+}
+
+### create admin user 513cef14-b8d9-4926-a79f-dc3debf8c1ea
+
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/users
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "Password@12345",
+  "phone": "13999999999",
+  "email": "admin@test.com",
+  "status": 1,
+  "role": 3
+
+
+}
+
+
+### Authenticate user customer 4df2521b-b92d-4cf2-9aa3-d3d9c837c855
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/auth
+Content-Type: application/json
+
+{
+  "password": "Password@12345",
+  "email": "customer@test.com"
+}
+
+### authticate user manager 8380dc8d-6419-4b1c-810a-e9c288b0f99f
+
+POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/auth
+Content-Type: application/json
+{
+  "password": "Password@12345",
+  "email": "manager@test.com"
+}
+
+### authenticate user admin 513cef14-b8d9-4926-a79f-dc3debf8c1ea
+
+  POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/auth
+Content-Type: application/json
+{
+  "password": "Password@12345",
+  "email": "admin@test.com"
+}
+###
+GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
 
 ###

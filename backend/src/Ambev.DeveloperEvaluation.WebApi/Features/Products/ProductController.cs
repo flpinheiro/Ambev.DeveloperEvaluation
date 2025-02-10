@@ -1,10 +1,14 @@
 ﻿using Ambev.DeveloperEvaluation.Application.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.Application.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.Application.Products.GetPaginatedProduct;
 using Ambev.DeveloperEvaluation.Application.Products.GetProduct;
+using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetPaginatedProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +73,30 @@ public class ProductController : BaseController
             Success = true,
             Message = "Product retrieved successfully",
             Data = _mapper.Map<GetProductResponse>(response)
+        });
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(ApiResponseWithData<PaginatedList<GetPaginatedProductResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetProduct([FromQuery] GetPaginatedProductRequest request, CancellationToken cancellationToken)
+    { 
+        var validator = new PaginatedRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if(!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<GetPaginatedProductCommand>(request);
+
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<PaginatedList<GetPaginatedProductResponse>>
+        {
+            Success = true,
+            Message = "Products retrieved successfully",
+            Data = _mapper.Map<PaginatedList<GetPaginatedProductResponse>>(response)
         });
     }
 

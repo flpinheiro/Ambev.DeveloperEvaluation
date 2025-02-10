@@ -2,6 +2,7 @@
 using Ambev.DeveloperEvaluation.Domain.Dtos;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
@@ -9,14 +10,17 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories;
 public class SaleRepository : ISaleRepository
 {
     private readonly DefaultContext _context;
-
-    public SaleRepository(DefaultContext context)
+    private readonly IUserService _userService;
+    public SaleRepository(DefaultContext context, IUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
 
-    public async Task<Sale> CreateAsync(Sale sale, CancellationToken cancellationToken = default)
+    public async Task<Sale?> CreateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
+        if (sale == null) return null;
+        if(_userService.UserId != Guid.Empty) sale.UserId = _userService.UserId;
         _context.Sales.Add(sale);
         await _context.SaveChangesAsync(cancellationToken);
         return sale;
@@ -36,9 +40,11 @@ public class SaleRepository : ISaleRepository
         return true;
     }
 
-    public async Task<PaginatedList<Sale>> GetAsync(PaginatedSaleRequestDto request, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<Sale>> GetAsync(GetPaginatedSaleDto request, CancellationToken cancellationToken = default)
     {
-        return await _context.Sales.Where(a => true).ToPaginatedListAsync(request.PageNumber, request.PageSize);
+        return await _context.Sales
+            .Where(s => s.UserId == _userService.UserId)
+            .ToPaginatedListAsync(request.PageNumber, request.PageSize);
     }
 
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -49,7 +55,7 @@ public class SaleRepository : ISaleRepository
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }
 
-    public Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
+    public Task<Sale?> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

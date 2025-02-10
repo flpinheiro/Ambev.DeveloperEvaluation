@@ -1,4 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Dtos;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +39,11 @@ public class ProductRepository : IProductRepository
     public async Task<IEnumerable<Product>> GetManyById(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
     {
         return await _context.Products.Where(p => ids.Contains(p.Id)).ToListAsync(cancellationToken);
+    }
+
+    public Task<PaginatedList<Product>> GetPaginatedProducts(GetPaginatedProductDto dto, CancellationToken cancellationToken = default)
+    {
+        return _context.Products.ToPaginatedListAsync(dto.PageNumber, dto.PageSize);
     }
 
     public Task<Product> UpdateAsync(Product product, CancellationToken cancellationToken = default)

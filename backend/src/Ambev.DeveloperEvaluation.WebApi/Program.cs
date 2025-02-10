@@ -107,6 +107,8 @@ public class Program
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseMiddleware<UserClaimsMiddleware>();
+
             app.UseBasicHealthChecks();
 
             app.MapControllers();

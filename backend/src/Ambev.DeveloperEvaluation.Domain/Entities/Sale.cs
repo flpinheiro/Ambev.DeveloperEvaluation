@@ -31,6 +31,10 @@ public class Sale : BaseEntity
     /// </summary>
     public SaleStatus Status { get; set; } = SaleStatus.Active;
 
+    public Guid UserId { get; set; }
+
+    public User User { get; set; } = new();
+
     /// <summary>
     /// Performs validation of the <see cref="Sale" /> entity using the<see cref="SaleValidator"/> rules.
     /// </summary>

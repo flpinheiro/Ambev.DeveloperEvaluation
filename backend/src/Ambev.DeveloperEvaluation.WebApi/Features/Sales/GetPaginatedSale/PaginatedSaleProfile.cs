@@ -4,11 +4,11 @@ using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 
-public class GetSaleProfile: Profile
+public class PaginatedSaleProfile: Profile
 {
-    public GetSaleProfile()
+    public PaginatedSaleProfile()
     {
-        CreateMap<GetSalePaginated, GetSaleCommand>();
+        CreateMap<GetPaginatedSaleRequest, GetPaginatedSalesCommand>();
         CreateMap<GetPaginatedSaleResult, GetPaginatedSaleResponse>();
     }
 }

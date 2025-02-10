@@ -19,6 +19,11 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(s => s.Date).IsRequired();
         builder.Property(p => p.Status).IsRequired().HasDefaultValue(SaleStatus.Active);
 
+        builder.HasOne(s => s.User)
+            .WithMany(u => u.Sales)
+            .HasForeignKey(s => s.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder.HasIndex(s => s.Number).IsUnique();
     }
 }

@@ -10,10 +10,12 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class SaleController : BaseController
@@ -31,8 +33,14 @@ public class SaleController : BaseController
     [ProducesResponseType(typeof(ApiResponseWithData<PaginatedList<GetPaginatedSaleResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetSale([FromQuery] GetSalePaginated request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetSale([FromQuery] GetPaginatedSaleRequest request, CancellationToken cancellationToken)
     {
+        var validator = new PaginatedRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
         var command = _mapper.Map<GetPaginatedSalesCommand>(request);
 
         var result = await _mediator.Send(command, cancellationToken);
@@ -72,7 +80,7 @@ public class SaleController : BaseController
             Data = _mapper.Map<GetSaleResponse>(response)
         });
     }
-
+    
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]

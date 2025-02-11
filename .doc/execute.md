@@ -1,4 +1,4 @@
-# eXecute process
+# EXecute process
 
 on `/backend` execute:
 

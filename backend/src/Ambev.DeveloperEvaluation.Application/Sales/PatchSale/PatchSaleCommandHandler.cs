@@ -1,16 +1,20 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+using Ambev.DeveloperEvaluation.Domain.Events;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
+using Rebus.Bus;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.PatchSale;
 
 public class PatchSaleCommandHandler : IRequestHandler<PatchSaleCommand, bool>
 {
     private readonly ISaleRepository _saleRepository;
+    private readonly IBus _bus;
 
-    public PatchSaleCommandHandler(ISaleRepository saleRepository)
+    public PatchSaleCommandHandler(ISaleRepository saleRepository, IBus bus)
     {
         _saleRepository = saleRepository;
+        _bus = bus;
     }
 
     public async Task<bool> Handle(PatchSaleCommand request, CancellationToken cancellationToken)
@@ -19,14 +23,11 @@ public class PatchSaleCommandHandler : IRequestHandler<PatchSaleCommand, bool>
 
         if (sale == null || sale.Status == SaleStatus.Finished) return false;
 
-        foreach (var ps in sale.ProductSales) 
-        {
-            if (sale.Status == ps.Status) ps.Status++;
-        }
-
         sale.Status++;
 
         await _saleRepository.UpdateAsync(sale, cancellationToken);
+
+        await _bus.Publish(new PatchSaleEvent() {  Id = sale.Id, Status = sale.Status});
 
         return true;
     }

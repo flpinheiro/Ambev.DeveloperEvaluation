@@ -1,7 +1,9 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
+﻿using Ambev.DeveloperEvaluation.Domain.Events;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Domain.ValueObjects;
 using AutoMapper;
 using MediatR;
+using Rebus.Bus;
 using SaleEntity = Ambev.DeveloperEvaluation.Domain.Entities.Sale;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
@@ -11,12 +13,14 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
     private readonly IMapper _mapper;
     private readonly IProductRepository _productRepository;
     private readonly ISaleRepository _saleRepository;
+    private readonly IBus _bus;
 
-    public CreateSaleCommandHandler(IProductRepository productRepository, ISaleRepository saleRepository, IMapper mapper)
+    public CreateSaleCommandHandler(IProductRepository productRepository, ISaleRepository saleRepository, IMapper mapper, IBus bus)
     {
         _productRepository = productRepository;
         _saleRepository = saleRepository;
         _mapper = mapper;
+        _bus = bus;
     }
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
@@ -53,6 +57,8 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
         await _saleRepository.CreateAsync(sale, cancellationToken);
 
         var result = _mapper.Map<CreateSaleResult>(sale);
+
+        await _bus.Publish(new CreateSaleEvent() { Id = sale.Id });
 
         return result;
     }

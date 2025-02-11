@@ -2,10 +2,10 @@
 @host_Address = https://localhost:8081
 
 #jwt token of the user, obtain after the fiurst login
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5ZGExMDkzYi05ZTk5LTRhOTgtOWNjYS04MDJlYjdlNWE2ZTEiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5Mjk1NjI5LCJleHAiOjE3MzkzMjQ0MjksImlhdCI6MTczOTI5NTYyOX0.Y6NPz166iPHeXlZWFhJh3IhRDeLJC7wlKOdOmDyzDmA
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJlZTM1YzMwZS1lZTY3LTQ4OWEtODAyYy1kMjg3NzIxOWNhNjEiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MzAyNTIyLCJleHAiOjE3MzkzMzEzMjIsImlhdCI6MTczOTMwMjUyMn0.eUxV8eiLw08-xrgonA-_YEwHo8uGZ5vIeCxbuYrbo0I
 
 #saleId obtain after create the first sale id
-@saleid = 4e5b834b-3355-4c2b-9a24-8e2749297fa1
+@saleid = ca64cad3-7d91-41b3-822c-277ec16050f0
 
 @productId = f5b1b3b4-3b3b-4b3b-8b3b-3b3b3b3b3b3b
 

@@ -21,7 +21,7 @@ public class GetProductTest
     }
 
     [Fact]
-    public async Task Should_return_Product() 
+    public async Task Should_return_Product()
     {
         var product = ProductTestData.GenerateValidProduct();
 

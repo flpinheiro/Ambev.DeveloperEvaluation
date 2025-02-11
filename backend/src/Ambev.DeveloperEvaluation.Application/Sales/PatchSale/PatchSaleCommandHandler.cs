@@ -27,7 +27,7 @@ public class PatchSaleCommandHandler : IRequestHandler<PatchSaleCommand, bool>
 
         await _saleRepository.UpdateAsync(sale, cancellationToken);
 
-        await _bus.Publish(new PatchSaleEvent() {  Id = sale.Id, Status = sale.Status});
+        await _bus.Publish(new PatchSaleEvent() { Id = sale.Id, Status = sale.Status });
 
         return true;
     }

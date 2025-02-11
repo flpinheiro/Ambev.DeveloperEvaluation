@@ -3,11 +3,11 @@ using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
 
-public class GetProductProfile: Profile
+public class GetProductProfile : Profile
 {
     public GetProductProfile()
     {
         CreateMap<GetProductRequest, GetProductCommand>();
-        CreateMap<GetProductResult,GetProductResponse>();
+        CreateMap<GetProductResult, GetProductResponse>();
     }
 }

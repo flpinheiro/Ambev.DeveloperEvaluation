@@ -20,7 +20,7 @@ public class DeleteSaleCommandHandler : IRequestHandler<DeleteSaleCommand, bool>
     {
         var result = await _saleRepository.DeleteAsync(request.Id, cancellationToken);
 
-        await _bus.Send(new DeleteSaleEvent() { Id = request.Id});
+        await _bus.Send(new DeleteSaleEvent() { Id = request.Id });
 
         return result;
     }

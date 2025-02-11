@@ -44,7 +44,7 @@ public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, Creat
 
         var sale = new SaleEntity
         {
-            Id= Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             ProductSales = productSales
         };
         sale.CalculateTotalValue();

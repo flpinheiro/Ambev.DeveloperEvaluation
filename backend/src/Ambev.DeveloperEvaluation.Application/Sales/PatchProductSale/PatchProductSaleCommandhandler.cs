@@ -43,9 +43,9 @@ public class PatchProductSaleCommandhandler : IRequestHandler<PatchProductSaleCo
             else
             {
                 var oldProductSale = sale.ProductSales.FirstOrDefault(ps => ps.ProductId == product.Id);
-                if (oldProductSale != null) 
-                { 
-                    oldProductSale.Quantity = quantity; 
+                if (oldProductSale != null)
+                {
+                    oldProductSale.Quantity = quantity;
                     oldProductSale.Status = Domain.Enums.SaleStatus.Active;
                 }
             }

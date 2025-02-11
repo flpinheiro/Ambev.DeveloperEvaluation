@@ -5,15 +5,10 @@ using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ambev.DeveloperEvaluation.Application.Products.GetPaginatedProduct;
 
-public class GetPaginatedProductCommand: PaginatedCommand, IRequest<PaginatedList<GetPaginatedProductResult>>
+public class GetPaginatedProductCommand : PaginatedCommand, IRequest<PaginatedList<GetPaginatedProductResult>>
 {
 }
 
@@ -36,7 +31,7 @@ public class GetPaginatedProductResult
     public decimal Price { get; set; }
 }
 
-public class GetPaginatedProductProfile : Profile 
+public class GetPaginatedProductProfile : Profile
 {
     public GetPaginatedProductProfile()
     {

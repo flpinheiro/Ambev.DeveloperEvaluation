@@ -80,7 +80,7 @@ public class ProductSale
     public void CalculateTotalAmount()
     {
         CalculateDiscount();
-        TotalAmout = Quantity * Product?.Price * (1M - Discount/100M) ?? 0;
+        TotalAmout = Quantity * Product?.Price * (1M - Discount / 100M) ?? 0;
     }
 
     /// <summary>
@@ -88,12 +88,12 @@ public class ProductSale
     /// </summary>
     private void CalculateDiscount()
     {
-        if(Quantity >= 10 && Quantity <= 20)
+        if (Quantity >= 10 && Quantity <= 20)
         {
             Discount = 20;
             return;
         }
-        if(Quantity >= 4 && Quantity < 10)
+        if (Quantity >= 4 && Quantity < 10)
         {
             Discount = 10;
             return;

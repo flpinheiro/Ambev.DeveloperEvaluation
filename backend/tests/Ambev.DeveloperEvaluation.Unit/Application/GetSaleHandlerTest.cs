@@ -31,7 +31,7 @@ public class GetSaleHandlerTest
 
         _saleRepository.GetByIdAsync(sale.Id).Returns(sale);
 
-        var command =  new GetSaleCommand() 
+        var command = new GetSaleCommand()
         {
             Id = sale.Id
         };

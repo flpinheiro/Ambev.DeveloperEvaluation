@@ -7,7 +7,7 @@ public class DeleteSaleRequest
 {
     public Guid Id { get; internal set; }
 }
-public class DeleteSaleValidator: Profile
+public class DeleteSaleValidator : Profile
 {
     public DeleteSaleValidator()
     {

@@ -4,7 +4,7 @@ using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.PatchSale;
 
-public class PatchSaleProfile : Profile 
+public class PatchSaleProfile : Profile
 {
     public PatchSaleProfile()
     {

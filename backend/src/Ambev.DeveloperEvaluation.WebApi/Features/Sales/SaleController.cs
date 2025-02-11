@@ -116,7 +116,7 @@ public class SaleController : BaseController
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateSale([FromBody]CreateSaleRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateSale([FromBody] CreateSaleRequest request, CancellationToken cancellationToken)
     {
         var validationResult = request.Validate();
 
@@ -146,7 +146,7 @@ public class SaleController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteSale([FromRoute]Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteSale([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var request = new DeleteSaleRequest { Id = id };
         var validadator = new DeleteSaleRequestValidator();
@@ -177,7 +177,7 @@ public class SaleController : BaseController
     [HttpDelete("{id}/Product")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveProductSale([FromRoute]Guid id,[FromBody] RemoveProductSaleRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> RemoveProductSale([FromRoute] Guid id, [FromBody] RemoveProductSaleRequest request, CancellationToken cancellationToken)
     {
         request.Id = id;
 
@@ -210,7 +210,7 @@ public class SaleController : BaseController
     [HttpPatch("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PatchSale([FromRoute]Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> PatchSale([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var request = new PatchSaleRequest { Id = id };
         var validatorResult = request.Validate();
@@ -236,7 +236,7 @@ public class SaleController : BaseController
     [HttpPatch("{id}/Product")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PatchProductSale([FromRoute]Guid id,[FromBody] PatchProductSaleRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> PatchProductSale([FromRoute] Guid id, [FromBody] PatchProductSaleRequest request, CancellationToken cancellationToken)
     {
         request.Id = id;
         var validationResult = request.Validate();

@@ -3,7 +3,7 @@ using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetPaginatedProduct;
 
-public class GetPaginatedProfile: Profile
+public class GetPaginatedProfile : Profile
 {
     public GetPaginatedProfile()
     {

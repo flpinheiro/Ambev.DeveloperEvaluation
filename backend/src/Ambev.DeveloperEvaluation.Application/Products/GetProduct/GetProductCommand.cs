@@ -10,7 +10,7 @@ public class GetProductCommand : IRequest<GetProductResult>
     public Guid Id { get; set; }
 }
 
-public class  GetProductResult
+public class GetProductResult
 {
     public Guid Id { get; set; }
     /// <summary>
@@ -29,7 +29,7 @@ public class  GetProductResult
     public decimal Price { get; set; }
 }
 
-public class GetProductHandler: IRequestHandler<GetProductCommand, GetProductResult>
+public class GetProductHandler : IRequestHandler<GetProductCommand, GetProductResult>
 {
     private readonly IMapper _mapper;
     private readonly IProductRepository _productRepository;
@@ -47,7 +47,7 @@ public class GetProductHandler: IRequestHandler<GetProductCommand, GetProductRes
     }
 }
 
-public class GetProductProfile: Profile
+public class GetProductProfile : Profile
 {
     public GetProductProfile()
     {

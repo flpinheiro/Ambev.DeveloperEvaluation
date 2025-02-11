@@ -10,7 +10,7 @@ public static class SaleTestData
         .RuleFor(s => s.Id, f => f.Random.Guid())
         .RuleFor(s => s.Number, f => f.IndexFaker)
         .RuleFor(s => s.Date, f => f.Date.Past())
-        .RuleFor(s => s.ProductSales,f => ProductSaleTestData.GenerateValidProductSales(f.Random.Number(100)));
+        .RuleFor(s => s.ProductSales, f => ProductSaleTestData.GenerateValidProductSales(f.Random.Number(100)));
 
     public static Sale GenerateValidSale()
     {

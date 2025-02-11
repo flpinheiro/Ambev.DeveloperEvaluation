@@ -18,7 +18,7 @@ public class RemoveProductSaleCommandHandler : IRequestHandler<RemoveProductSale
         sale.ProductSales
             .Where(p => request.Products.Contains(p.ProductId))
             .ToList()
-            .ForEach(p => 
+            .ForEach(p =>
             {
                 p.Status = Domain.Enums.SaleStatus.Canceled;
                 p.Quantity = 0;

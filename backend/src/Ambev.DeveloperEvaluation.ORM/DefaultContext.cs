@@ -32,7 +32,7 @@ public class DefaultContext : DbContext
         {
             var connectionString = _configuration?.GetConnectionString("DefaultConnection");
             optionsBuilder.UseNpgsql(connectionString, b => b.MigrationsAssembly("Ambev.DeveloperEvaluation.ORM"));
-            
+
         }
     }
 }

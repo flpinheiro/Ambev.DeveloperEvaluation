@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 
 /// <summary>
 /// data to Create a new Product

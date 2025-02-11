@@ -13,7 +13,7 @@ public class CreateSaleRequest
     /// </summary>
     public IEnumerable<ProductRequestDto> Products { get; set; } = [];
 
-    internal ValidationResult Validate() 
+    internal ValidationResult Validate()
     {
         Products = Products.JoinProductRequestDto();
 

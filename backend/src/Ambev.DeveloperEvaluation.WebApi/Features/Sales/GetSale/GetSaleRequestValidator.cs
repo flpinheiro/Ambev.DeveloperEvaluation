@@ -5,7 +5,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 /// <summary>
 /// validate a request for a sale
 /// </summary>
-public class GetSaleRequestValidator: AbstractValidator<GetSaleRequest>
+public class GetSaleRequestValidator : AbstractValidator<GetSaleRequest>
 {
     /// <summary>
     /// initialize a instance of GetSaleRequestValidator

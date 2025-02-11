@@ -1,6 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
-
-namespace Ambev.DeveloperEvaluation.Domain.Dtos;
+﻿namespace Ambev.DeveloperEvaluation.Domain.Dtos;
 
 public class ProductRequestDto
 {
@@ -15,7 +13,7 @@ public class ProductRequestDto
     public int Quantity { get; set; }
 }
 
-public static class ProductRequestDtoExtensions 
+public static class ProductRequestDtoExtensions
 {
     public static IEnumerable<ProductRequestDto> JoinProductRequestDto(this IEnumerable<ProductRequestDto> request)
     {

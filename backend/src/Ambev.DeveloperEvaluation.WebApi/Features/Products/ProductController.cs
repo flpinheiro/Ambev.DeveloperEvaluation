@@ -135,7 +135,7 @@ public class ProductController : BaseController
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProduct([FromRoute]Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteProduct([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var request = new DeleteProductRequest { Id = id };
         var validator = new DeleteProductRequestValidator();

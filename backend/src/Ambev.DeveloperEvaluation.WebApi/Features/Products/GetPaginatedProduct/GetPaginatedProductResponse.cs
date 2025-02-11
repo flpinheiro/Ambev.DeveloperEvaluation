@@ -3,7 +3,7 @@
 /// <summary>
 /// response of the products paginated
 /// </summary>
-public class GetPaginatedProductResponse 
+public class GetPaginatedProductResponse
 {
     /// <summary>
     /// Product id

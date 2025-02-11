@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20250210213007_AddUserCorrelationToSale3")]
-    partial class AddUserCorrelationToSale3
+    [Migration("20250211021124_AddCreatedAtAndUpdatedAtToSaleEntity2")]
+    partial class AddCreatedAtAndUpdatedAtToSaleEntity2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,7 +125,8 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                         .HasDefaultValueSql("gen_random_uuid()");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("Date");
 
                     b.Property<int>("Number")
                         .ValueGeneratedOnAdd()
@@ -140,6 +141,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.Property<decimal>("TotalValue")
                         .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -210,6 +214,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("numeric");
 
@@ -221,6 +228,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
 
                     b.Property<decimal>("TotalAmout")
                         .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("SaleId", "ProductId");
 

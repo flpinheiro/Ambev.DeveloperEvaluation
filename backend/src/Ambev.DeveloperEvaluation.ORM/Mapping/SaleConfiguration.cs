@@ -17,10 +17,11 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(s => s.Number).UseSerialColumn().IsRequired();
         builder.Property(s => s.TotalValue).IsRequired();
         builder.Property(s => s.Date).IsRequired();
+        builder.Property(s => s.UpdatedAt).IsRequired(false);
         builder.Property(p => p.Status).IsRequired().HasDefaultValue(SaleStatus.Active);
 
         builder.HasOne(s => s.User)
-            .WithMany(u=> u.Sales)
+            .WithMany(u => u.Sales)
             .HasForeignKey(s => s.UserId)
             .HasPrincipalKey(u => u.Id)
             .OnDelete(DeleteBehavior.Cascade);

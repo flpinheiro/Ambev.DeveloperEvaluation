@@ -45,6 +45,10 @@ public class ProductSale
     /// </summary>
     public SaleStatus Status { get; set; } = SaleStatus.Active;
 
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public DateTime? UpdatedAt { get; set; }
+
     /// <summary>
     /// Performs validation of the <see cref="ProductSale"/> Vaslue Object using the <see cref="ProductSaleValidator"/> rules.
     /// </summary>

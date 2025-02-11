@@ -20,6 +20,8 @@ public class Sale : BaseEntity
     /// </summary>
     public DateTime Date { get; set; } = DateTime.UtcNow;
 
+    public DateTime? UpdatedAt { get; set; } = null;
+
     /// <summary>
     /// Gets the total value of the sale.
     /// must be calculated based on the sum of the products in the sale.
@@ -70,6 +72,8 @@ public class Sale : BaseEntity
     public void CalculateTotalValue()
     {
         ProductSales.ToList().ForEach(p => p.CalculateTotalAmount());
-        TotalValue = ProductSales.Sum(p => p.TotalAmout);
+        TotalValue = ProductSales
+            .Where(p => p.Status != SaleStatus.Canceled)
+            .Sum(p => p.TotalAmout);
     }
 }

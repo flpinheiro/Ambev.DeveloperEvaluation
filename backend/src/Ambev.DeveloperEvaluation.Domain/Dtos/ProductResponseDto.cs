@@ -1,4 +1,6 @@
-﻿namespace Ambev.DeveloperEvaluation.Domain.Dtos;
+﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+
+namespace Ambev.DeveloperEvaluation.Domain.Dtos;
 
 public class ProductResponseDto
 {
@@ -26,4 +28,9 @@ public class ProductResponseDto
     /// </summary>
     public decimal Discount { get; set; }
     public string Description { get; set; } = string.Empty;
+
+    /// <summary>
+    /// gets the sale.status of the product
+    /// </summary>
+    public SaleStatus Status { get; set; } = SaleStatus.Active;
 }

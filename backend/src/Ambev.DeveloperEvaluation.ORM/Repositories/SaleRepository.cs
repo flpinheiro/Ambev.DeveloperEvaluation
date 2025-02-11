@@ -59,8 +59,14 @@ public class SaleRepository : ISaleRepository
 
     public async Task<Sale?> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
     {
+        var date = DateTime.UtcNow;
+        sale.UpdatedAt = date;
+        sale.ProductSales.ToList().ForEach(p => p.UpdatedAt = date);
+
+        _context.Entry(sale).State = EntityState.Modified;
+
         _context.Sales.Update(sale);
-        _context.ProductSales.UpdateRange(sale.ProductSales);
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return sale;

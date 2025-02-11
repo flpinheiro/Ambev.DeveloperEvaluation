@@ -135,19 +135,58 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyN
 ### Get sale by id
 
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
+GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/8dfd00ac-586c-4324-9813-575f2612c02d
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
 
-### Cancel sale by id 
+### Cancel sale by id set sale status to canceled
 
 
 DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
 
-###
+### update sale status canceled -> active-> payed-> delivered -> finished.
 
-PATCH {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
+PATCH {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/243838cc-80e6-4ae7-bc35-458a48cc194d
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
 
+### set product from sale status to canceled and recalculate totalammount
+
+DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/243838cc-80e6-4ae7-bc35-458a48cc194d/Product
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+
+{
+  "products": [
+    "6f5a5196-af78-4446-940e-6c410238399d"
+  ]
+}
+
+### update quantity
+
+PATCH {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/8dfd00ac-586c-4324-9813-575f2612c02d/Product
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+
+{
+  "products": [
+    {
+      "productId": "c28ab6d3-2cd3-45b3-98a7-2222c9cd7edb",
+      "quantity": 1
+    },
+    {
+      "productId": "e3c9c4bd-b12c-45b0-a106-7390a8249a7a",
+      "quantity": 1
+    },
+        {
+      "productId": "3c90b095-183d-40bb-a18c-16979cbda5b3",
+      "quantity": 10
+    },
+    {
+      "productId": "f5b1b3b4-3b3b-4b3b-8b3b-3b3b3b3b3b3b",
+      "quantity": 10
+    }
+    
+  ]
+}
 ###

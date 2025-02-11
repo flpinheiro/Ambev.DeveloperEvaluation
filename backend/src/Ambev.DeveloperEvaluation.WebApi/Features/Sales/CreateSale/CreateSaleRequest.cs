@@ -12,19 +12,7 @@ public class CreateSaleRequest
 
     internal ValidationResult Validate() 
     {
-        var ids = Products.Select(p => p.ProductId).Distinct().ToList();
-        var products = new List<ProductRequestDto>();
-
-        foreach (var id in ids) 
-        {
-            var dto = new ProductRequestDto 
-            { 
-                ProductId = id,
-                Quantity = Products.Where(p => p.ProductId == id).Sum(p => p.Quantity),
-            };
-            products.Add(dto);
-        }
-        Products = products;
+        Products = Products.JoinProductRequestDto();
 
         var validatidator = new CreateSaleRequestValidator();
         var validationResult = validatidator.Validate(this);

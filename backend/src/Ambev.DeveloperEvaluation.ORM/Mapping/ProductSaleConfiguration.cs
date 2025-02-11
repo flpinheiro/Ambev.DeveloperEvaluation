@@ -28,5 +28,8 @@ public class ProductSaleConfiguration : IEntityTypeConfiguration<ProductSale>
         builder.Property(p => p.TotalAmout).IsRequired();
         builder.Property(p => p.Discount).IsRequired();
         builder.Property(p => p.Status).IsRequired();
+
+        builder.Property(p => p.CreatedAt).IsRequired();
+        builder.Property(p => p.UpdatedAt).IsRequired(false);
     }
 }

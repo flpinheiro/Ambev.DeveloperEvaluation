@@ -8,26 +8,39 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.DeleteProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetPaginatedProduct;
 using Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
-using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products;
 
+/// <summary>
+/// Controller for product Operations
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ProductController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+
+    /// <summary>
+    /// Initializes a new instance of ProductController
+    /// </summary>
+    /// <param name="mediator">The mediator instance</param>
+    /// <param name="mapper">The AutoMapper instance</param>
     public ProductController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
     }
 
-
+    /// <summary>
+    /// Create a new Product
+    /// </summary>
+    /// <param name="request">data to create a new Product</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateProductResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -48,11 +61,17 @@ public class ProductController : BaseController
         });
     }
 
+    /// <summary>
+    /// Get Product by Id endpoint
+    /// </summary>
+    /// <param name="id">Product Id</param>
+    /// <param name="cancellationToken">Cancelation Token</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<GetProductResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetProduct(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetProduct([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var request = new GetProductRequest { Id = id };
         var validator = new GetProductRequestValidator();
@@ -65,7 +84,7 @@ public class ProductController : BaseController
         var command = _mapper.Map<GetProductCommand>(request);
         var response = await _mediator.Send(command, cancellationToken);
 
-        if(response == null)
+        if (response == null)
             return NotFound(new ApiResponse { Message = "Product not found", Success = false });
 
         return Ok(new ApiResponseWithData<GetProductResponse>
@@ -76,16 +95,22 @@ public class ProductController : BaseController
         });
     }
 
+    /// <summary>
+    /// Get all product paginated
+    /// </summary>
+    /// <param name="request">request data to get all product paginated</param>
+    /// <param name="cancellationToken">Cancelation Token</param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponseWithData<PaginatedList<GetPaginatedProductResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetProduct([FromQuery] GetPaginatedProductRequest request, CancellationToken cancellationToken)
-    { 
+    {
         var validator = new PaginatedRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
-        if(!validationResult.IsValid)
+        if (!validationResult.IsValid)
             return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<GetPaginatedProductCommand>(request);
@@ -100,11 +125,17 @@ public class ProductController : BaseController
         });
     }
 
+    /// <summary>
+    /// Delete a product
+    /// </summary>
+    /// <param name="id">product id to be deleted</param>
+    /// <param name="cancellationToken">cancelation token</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteProduct([FromRoute]Guid id, CancellationToken cancellationToken)
     {
         var request = new DeleteProductRequest { Id = id };
         var validator = new DeleteProductRequestValidator();
@@ -114,9 +145,9 @@ public class ProductController : BaseController
         if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<DeleteProductCommand>(request);
-        var result =  await _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(command, cancellationToken);
 
-        if(!result)
+        if (!result)
             return NotFound(new ApiResponse { Message = "Product not found", Success = false });
 
         return Ok(new ApiResponse

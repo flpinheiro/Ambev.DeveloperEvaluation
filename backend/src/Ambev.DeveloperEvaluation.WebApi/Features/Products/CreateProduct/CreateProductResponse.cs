@@ -1,5 +1,8 @@
 ﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 
+/// <summary>
+/// response when a new product is created
+/// </summary>
 public class CreateProductResponse
 {
     /// <summary>

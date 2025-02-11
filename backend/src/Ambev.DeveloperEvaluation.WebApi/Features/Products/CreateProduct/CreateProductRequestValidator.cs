@@ -3,8 +3,14 @@ using FluentValidation;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 
+/// <summary>
+/// Validate a request to create a new Product
+/// </summary>
 public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
+    /// <summary>
+    /// Initialize a new Instance of CreateProductRequestValidator
+    /// </summary>
     public CreateProductRequestValidator()
     {
         RuleFor(product => product.Name)

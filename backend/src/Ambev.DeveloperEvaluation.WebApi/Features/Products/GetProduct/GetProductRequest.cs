@@ -1,8 +1,13 @@
 ﻿
-namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
+
+/// <summary>
+/// information to que a product
+/// </summary>
+public class GetProductRequest
 {
-    public class GetProductRequest
-    {
-        public Guid Id { get; internal set; }
-    }
+    /// <summary>
+    /// Product id
+    /// </summary>
+    public Guid Id { get; internal set; }
 }

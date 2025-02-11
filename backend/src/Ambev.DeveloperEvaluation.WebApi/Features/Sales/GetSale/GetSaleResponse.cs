@@ -3,8 +3,14 @@ using Ambev.DeveloperEvaluation.Domain.Enums;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 
+/// <summary>
+/// response to get a sale
+/// </summary>
 public class GetSaleResponse
 {
+    /// <summary>
+    /// sale id
+    /// </summary>
     public Guid Id { get; set; }
     /// <summary>
     /// Gets the sale number.
@@ -31,5 +37,8 @@ public class GetSaleResponse
     /// </summary>
     public SaleStatus Status { get; set; }
 
+    /// <summary>
+    /// product list
+    /// </summary>
     public IEnumerable<ProductResponseDto> Products { get; set; } = [];
 }

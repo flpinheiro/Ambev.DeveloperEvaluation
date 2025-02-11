@@ -1,13 +1,16 @@
-﻿using Ambev.DeveloperEvaluation.Common.Validation;
-using Ambev.DeveloperEvaluation.Domain.Dtos;
+﻿using Ambev.DeveloperEvaluation.Domain.Dtos;
 using FluentValidation.Results;
-using MediatR;
-using System.Threading;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 
+/// <summary>
+/// resquest information to create a new sale
+/// </summary>
 public class CreateSaleRequest
 {
+    /// <summary>
+    /// product list
+    /// </summary>
     public IEnumerable<ProductRequestDto> Products { get; set; } = [];
 
     internal ValidationResult Validate() 

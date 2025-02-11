@@ -21,6 +21,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales;
 
+/// <summary>
+/// Controller for sale operation
+/// </summary>
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
@@ -29,12 +32,23 @@ public class SaleController : BaseController
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Initializes a new instance of SaleController
+    /// </summary>
+    /// <param name="mediator">The mediator instance</param>
+    /// <param name="mapper">The AutoMapper instance</param>
     public SaleController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get all sales paginated for the user authenticated
+    /// </summary>
+    /// <param name="request">request information to que the sales</param>
+    /// <param name="cancellationToken">canceltion token</param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponseWithData<PaginatedList<GetPaginatedSaleResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -62,11 +76,17 @@ public class SaleController : BaseController
             });
     }
 
+    /// <summary>
+    /// Get sale be id
+    /// </summary>
+    /// <param name="id">sale id to be retrieved</param>
+    /// <param name="cancellationToken">cancelation token</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<GetSaleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetSale(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetSale([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var request = new GetSaleRequest { Id = id };
         var validadator = new GetSaleRequestValidator();
@@ -87,10 +107,16 @@ public class SaleController : BaseController
         });
     }
 
+    /// <summary>
+    /// Create a new sale
+    /// </summary>
+    /// <param name="request">sale data to be created</param>
+    /// <param name="cancellationToken">cancelation token</param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateSale(CreateSaleRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateSale([FromBody]CreateSaleRequest request, CancellationToken cancellationToken)
     {
         var validationResult = request.Validate();
 
@@ -107,11 +133,20 @@ public class SaleController : BaseController
             Data = _mapper.Map<CreateSaleResponse>(response)
         });
     }
+
+    /// <summary>
+    /// cancel the sale.
+    /// 
+    /// The sale only can be cancelled if status is Active, otherelse return false
+    /// </summary>
+    /// <param name="id">sale id to be cancelled</param>
+    /// <param name="cancellationToken">cancelation token</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteSale(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteSale([FromRoute]Guid id, CancellationToken cancellationToken)
     {
         var request = new DeleteSaleRequest { Id = id };
         var validadator = new DeleteSaleRequestValidator();
@@ -132,10 +167,17 @@ public class SaleController : BaseController
         });
     }
 
+    /// <summary>
+    /// cancel products on the sale
+    /// </summary>
+    /// <param name="id">sale id of the products</param>
+    /// <param name="request">data od the products to be cancelled</param>
+    /// <param name="cancellationToken">cancellation token</param>
+    /// <returns></returns>
     [HttpDelete("{id}/Product")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> RemoveProductSale(Guid id, RemoveProductSaleRequest request,  CancellationToken cancellationToken) 
+    public async Task<IActionResult> RemoveProductSale([FromRoute]Guid id,[FromBody] RemoveProductSaleRequest request, CancellationToken cancellationToken)
     {
         request.Id = id;
 
@@ -145,17 +187,30 @@ public class SaleController : BaseController
 
         var command = _mapper.Map<RemoveProductSaleCommand>(request);
 
-        var result = await  _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(command, cancellationToken);
 
         if (!result) return BadRequest(new ApiResponse() { Success = false, Message = " unable to cancel product item form sale" });
 
         return Ok(new ApiResponse() { Success = true, Message = "Product Item canceled with success" });
     }
 
+    /// <summary>
+    /// Update sale status
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// <listheader>The update list:</listheader> 
+    /// <list type="bullet">cancel -> active</list>
+    /// <list type="bullet">active -> payed</list>
+    /// <list type="bullet">payed -> delivery</list>
+    /// <list type="bullet">delivery -> finished</list>
+    /// </remarks>
     [HttpPatch("{id}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PatchSale(Guid id, CancellationToken cancellationToken)
+    public async Task<IActionResult> PatchSale([FromRoute]Guid id, CancellationToken cancellationToken)
     {
         var request = new PatchSaleRequest { Id = id };
         var validatorResult = request.Validate();
@@ -171,22 +226,29 @@ public class SaleController : BaseController
         return Ok(new ApiResponse { Success = true, Message = "Sale updated successfully" });
     }
 
+    /// <summary>
+    /// update product quantity
+    /// </summary>
+    /// <param name="id">sale id</param>
+    /// <param name="request">request data to be updated</param>
+    /// <param name="cancellationToken">cancellation token</param>
+    /// <returns></returns>
     [HttpPatch("{id}/Product")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PatchProductSale(Guid id, PatchProductSaleRequest request, CancellationToken cancellationToken) 
+    public async Task<IActionResult> PatchProductSale([FromRoute]Guid id,[FromBody] PatchProductSaleRequest request, CancellationToken cancellationToken)
     {
         request.Id = id;
         var validationResult = request.Validate();
 
-        if(!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<PatchProductSaleCommand>(request);
 
         var result = await _mediator.Send(command, cancellationToken);
 
-        if(!result) return BadRequest(new ApiResponse() { Success = false, Message = "Unable to update sale" });
+        if (!result) return BadRequest(new ApiResponse() { Success = false, Message = "Unable to update sale" });
 
-        return Ok(new ApiResponse() { Success = true, Message = "Sale sucefully updated"});
+        return Ok(new ApiResponse() { Success = true, Message = "Sale sucefully updated" });
     }
 }

@@ -1,8 +1,39 @@
-﻿@Ambev.DeveloperEvaluation.WebApi_HostAddress = https://localhost:7181
+﻿# host address of the server to be executed
+@host_Address = https://localhost:8081
 
-#### Create customer user 4df2521b-b92d-4cf2-9aa3-d3d9c837c855
+#jwt token of the user, obtain after the fiurst login
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI5ZGExMDkzYi05ZTk5LTRhOTgtOWNjYS04MDJlYjdlNWE2ZTEiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5Mjk1NjI5LCJleHAiOjE3MzkzMjQ0MjksImlhdCI6MTczOTI5NTYyOX0.Y6NPz166iPHeXlZWFhJh3IhRDeLJC7wlKOdOmDyzDmA
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/users
+#saleId obtain after create the first sale id
+@saleid = 4e5b834b-3355-4c2b-9a24-8e2749297fa1
+
+@productId = f5b1b3b4-3b3b-4b3b-8b3b-3b3b3b3b3b3b
+
+#### Get all products
+
+GEt {{host_Address}}/api/product
+Content-Type: application/json
+
+### Get Product By Id, Change the ProductId to get diferents products
+
+GET {{host_Address}}/api/product/{{productId}}
+Content-Type:  application/json
+
+### Create anew Product
+
+POST {{host_Address}}/api/product
+Content-Type: application/json
+
+{
+  "name": "Test Product",
+  "description": "A product made only to test",
+  "price": 10,
+  "quantity": 100
+}
+
+#### Create customer user 
+
+POST {{host_Address}}/api/users
 Content-Type: application/json
 
 {
@@ -14,9 +45,9 @@ Content-Type: application/json
   "role": 1
 }
 
-### Create Manger user 8380dc8d-6419-4b1c-810a-e9c288b0f99f
+### Create Manger user 
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/users
+POST {{host_Address}}/api/users
 Content-Type: application/json
 
 {
@@ -28,10 +59,10 @@ Content-Type: application/json
   "role": 2
 }
 
-### create admin user 513cef14-b8d9-4926-a79f-dc3debf8c1ea
+### create admin user 
 
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/users
+POST {{host_Address}}/api/users
 Content-Type: application/json
 
 {
@@ -44,9 +75,9 @@ Content-Type: application/json
 }
 
 
-### Authenticate user customer 4df2521b-b92d-4cf2-9aa3-d3d9c837c855
+### Authenticate user customer 
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/auth
+POST {{host_Address}}/api/auth
 Content-Type: application/json
 
 {
@@ -54,34 +85,36 @@ Content-Type: application/json
   "email": "customer@test.com"
 }
 
-### authticate user manager 8380dc8d-6419-4b1c-810a-e9c288b0f99f
+### authticate user manager 
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/auth
+POST {{host_Address}}/api/auth
 Content-Type: application/json
 {
   "password": "Password@12345",
   "email": "manager@test.com"
 }
 
-### authenticate user admin 513cef14-b8d9-4926-a79f-dc3debf8c1ea
+### authenticate user admin 
 
-  POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/auth
+POST {{host_Address}}/api/auth
 Content-Type: application/json
 {
   "password": "Password@12345",
   "email": "admin@test.com"
 }
 
-### get sales for customer
+### for the sale it's mandatory to have Authorization: Bearer {{token}} header parameter, thus authenticate and change the token on the right place
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+### get all sales for customer, if empty create a few sales before
+
+GET {{host_Address}}/api/sale
+Authorization: Bearer {{token}}
 
 ### create sale for customer, but should return error of maximun quantity exceded
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
+POST {{host_Address}}/api/sale
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+Authorization: Bearer {{token}}
 
 {
   "products": [
@@ -105,11 +138,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyN
 }
 
 
-### create sale for customer
+### create sale for customer, you can change the products id and quantity, also add more products to the selection
 
-POST {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale
+POST {{host_Address}}/api/sale
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+Authorization: Bearer {{token}}
 
 {
   "products": [
@@ -135,26 +168,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyN
 ### Get sale by id
 
 
-GET {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/8dfd00ac-586c-4324-9813-575f2612c02d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+GET {{host_Address}}/api/sale/{{saleid}}
+Authorization: Bearer {{token}}
 
 ### Cancel sale by id set sale status to canceled
 
-
-DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/dc951345-824e-4d7d-9021-43b7ba10e44f
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+DELETE {{host_Address}}/api/sale/{{saleid}}
+Authorization: Bearer {{token}}
 
 ### update sale status canceled -> active-> payed-> delivered -> finished.
 
-PATCH {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/243838cc-80e6-4ae7-bc35-458a48cc194d
+PATCH {{host_Address}}/api/sale/{{saleid}}
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+Authorization: Bearer {{token}}
 
 ### set product from sale status to canceled and recalculate totalammount
 
-DELETE {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/243838cc-80e6-4ae7-bc35-458a48cc194d/Product
+DELETE {{host_Address}}/api/sale/{{saleid}}/Product
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+Authorization: Bearer {{token}}
 
 {
   "products": [
@@ -164,9 +196,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyN
 
 ### update quantity
 
-PATCH {{Ambev.DeveloperEvaluation.WebApi_HostAddress}}/api/sale/8dfd00ac-586c-4324-9813-575f2612c02d/Product
+PATCH {{host_Address}}/api/sale/{{saleid}}/Product
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyNTIxYi1iOTJkLTRjZjItOWFhMy1kM2Q5YzgzN2M4NTUiLCJ1bmlxdWVfbmFtZSI6ImN1c3RvbWVyIiwicm9sZSI6IkN1c3RvbWVyIiwibmJmIjoxNzM5MjExODI3LCJleHAiOjE3MzkyNDA2MjcsImlhdCI6MTczOTIxMTgyN30.8Mhdg7MYB5eu0Omuw4o1WBR7x3UW0mICZL9ZlNRSSSg
+Authorization: Bearer {{token}}
 
 {
   "products": [
@@ -189,4 +221,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0ZGYyN
     
   ]
 }
+
 ###

@@ -18,6 +18,7 @@ public class DefaultContext : DbContext
     public DefaultContext(DbContextOptions<DefaultContext> options, IConfiguration? configuration = null) : base(options)
     {
         _configuration = configuration;
+        Database.Migrate();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +32,7 @@ public class DefaultContext : DbContext
         {
             var connectionString = _configuration?.GetConnectionString("DefaultConnection");
             optionsBuilder.UseNpgsql(connectionString, b => b.MigrationsAssembly("Ambev.DeveloperEvaluation.ORM"));
+            
         }
     }
 }

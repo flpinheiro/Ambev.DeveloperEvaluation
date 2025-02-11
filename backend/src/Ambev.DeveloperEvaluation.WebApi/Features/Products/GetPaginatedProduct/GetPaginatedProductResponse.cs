@@ -1,12 +1,12 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetProduct;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.GetPaginatedProduct;
 
 /// <summary>
-/// response after get a product
+/// response of the products paginated
 /// </summary>
-public class GetProductResponse
+public class GetPaginatedProductResponse 
 {
     /// <summary>
-    /// product id
+    /// Product id
     /// </summary>
     public Guid Id { get; set; }
     /// <summary>

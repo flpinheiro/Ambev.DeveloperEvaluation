@@ -90,3 +90,9 @@ See [Project Structure](/.doc/project-structure.md)
 This section describes migration structure used on the project
 
 see [Migration](/.doc/migration.md)
+
+## How to Execute 
+
+This Section describres the process to execute the project
+
+see [Execute](/.doc//execute.md)

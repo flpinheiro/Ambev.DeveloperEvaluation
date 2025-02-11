@@ -2,6 +2,9 @@
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Products.CreateProduct;
 
+/// <summary>
+/// data to Create a new Product
+/// </summary>
 public class CreateProductRequest
 {
     /// <summary>

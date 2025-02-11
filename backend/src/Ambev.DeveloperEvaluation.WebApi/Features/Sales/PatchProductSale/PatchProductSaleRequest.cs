@@ -1,17 +1,22 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sales.PatchProductSale;
-using Ambev.DeveloperEvaluation.Domain.Dtos;
-using Ambev.DeveloperEvaluation.Domain.Validation;
-using AutoMapper;
-using FluentValidation;
+﻿using Ambev.DeveloperEvaluation.Domain.Dtos;
 using FluentValidation.Results;
 
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.PatchProductSale;
 
+/// <summary>
+/// information to update products from sale
+/// </summary>
 public class PatchProductSaleRequest
 {
+    /// <summary>
+    /// sale id
+    /// </summary>
     public Guid Id { get; internal set; }
 
+    /// <summary>
+    /// product list to be updated
+    /// </summary>
     public IEnumerable<ProductRequestDto> Products { get; set; } = [];
 
     internal ValidationResult Validate()
@@ -22,24 +27,5 @@ public class PatchProductSaleRequest
         var validationResult = validatidator.Validate(this);
 
         return validationResult;
-    }
-}
-
-public class PatchProductSaleValidator : Profile
-{
-    public PatchProductSaleValidator()
-    {
-        CreateMap<PatchProductSaleRequest, PatchProductSaleCommand>();
-    }
-}
-
-public class PatchProductSaleRequestValidator : AbstractValidator<PatchProductSaleRequest>
-{
-    public PatchProductSaleRequestValidator()
-    {
-        RuleFor(x => x.Products)
-            .NotEmpty()
-            .WithMessage("It's necessary to add at least one Product")
-            .ForEach(product => product.SetValidator(new ProductRequestDtoValidator()));
     }
 }

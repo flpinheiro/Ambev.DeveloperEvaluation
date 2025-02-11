@@ -2,8 +2,14 @@
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetPaginatedSale;
 
+/// <summary>
+/// response of the paginated sale request
+/// </summary>
 public class GetPaginatedSaleResponse 
 {
+    /// <summary>
+    /// sale id
+    /// </summary>
     public Guid Id { get; set; }
 
     /// <summary>
